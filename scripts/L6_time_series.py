@@ -6,7 +6,7 @@ import numpy as np
 
 def nc_to_df(netcdf_file):
     """
-    Helper function to load .nc file to pandas dataframe.
+    Helper function to load .nc file into pandas dataframe.
     """
     ds = xr.open_dataset(netcdf_file)
     df = ds.to_dataframe()
