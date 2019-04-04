@@ -6,7 +6,7 @@ import numpy as np
 
 def nc_to_df(netcdf_file):
     """
-    Function to load .nc file to pandas dataframe.
+    Helper function to load .nc file to pandas dataframe.
     """
     ds = xr.open_dataset(netcdf_file)
     df = ds.to_dataframe()
@@ -18,7 +18,7 @@ def nc_to_df(netcdf_file):
 
 def plot_variable(data, var, ax, window):
     """
-    Function to plot indivdual variable on subplot.
+    Helper function to plot indivdual variable on subplot.
     """
     data[f'{var}_SOLO'].resample('d').mean().rolling(
         window, center=True).mean().plot(color='k', ax=ax, label=f'{var} SOLO')
@@ -33,7 +33,20 @@ def plot_variable(data, var, ax, window):
 def plot_time_series(netcdf_file, window, outfile=None):
     """
     Function to plot time series of NEE, GPP and ER derived using SOLO, LL and
-    LT. Window specifies number of days used to calculate running mean.
+    LT.
+
+    Parameters
+    ----------
+    netcdf_file : string
+        path to source netcdf file
+    window: interger
+        number of days used to calculate running mean
+    outfile (optional):
+        path where plot will be saved
+
+    Returns:
+    --------
+    Pyplot figure and optional saves figure to file
     """
     data = nc_to_df(netcdf_file)
 
