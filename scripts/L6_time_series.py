@@ -9,14 +9,15 @@ def plot_variable(data, var, ax, window):
     """
     Helper function to plot indivdual variable on subplot.
     """
-    data[f'{var}_SOLO'].resample('d').mean().rolling(
-        window, center=True).mean().plot(color='k', ax=ax, label=f'{var} SOLO')
-    data[f'{var}_LL'].resample('d').mean().rolling(
-        window, center=True).mean().plot(color='b', ax=ax, label=f'{var} LL')
-    data[f'{var}_LT'].resample('d').mean().rolling(
-        window, center=True).mean().plot(color='r', ax=ax, label=f'{var} LT')
+    ax.plot(data[f'{var}_SOLO'].resample('d').mean().rolling(
+        window, center=True).mean(), 'k-', label=f'{var} SOLO')
+    ax.plot(data[f'{var}_LL'].resample('d').mean().rolling(
+        window, center=True).mean(), 'b-', label=f'{var} LL')
+    ax.plot(data[f'{var}_LT'].resample('d').mean().rolling(
+        window, center=True).mean(), 'r-', label=f'{var} LT')
     ax.legend(ncol=3)
     ax.set_ylabel(f'${var}\ (umol\ m^{-2}\ s^{-1})$')
+    ax.set_xlabel('')
 
 
 def plot_time_series(netcdf_file, window, outfile=None):
@@ -39,16 +40,12 @@ def plot_time_series(netcdf_file, window, outfile=None):
     """
     data = nc_to_df(netcdf_file)
 
-    fig = plt.figure(figsize=(10, 6))
-    ax1 = fig.add_subplot(311)
-    ax2 = fig.add_subplot(312, sharex=ax1)
-    ax3 = fig.add_subplot(313, sharex=ax1)
+    fig, (ax1, ax2, ax3) = plt.subplots(figsize=(10, 6), nrows=3, sharex=True)
 
     plot_variable(data, 'GPP', ax1, window)
     plot_variable(data, 'NEE', ax2, window)
     plot_variable(data, 'ER', ax3, window)
 
-    plt.xlabel('')
     plt.tight_layout()
     plt.show()
 
