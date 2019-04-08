@@ -57,7 +57,11 @@ def plot_it(data, window, outfile=None):
         plt.savefig(outfile, dpi=300, bbox_inches='tight')
 
 
-if __name__ == '__main__':
+def main():
     data_path = Path('./data')
     data = concat_data(data_path, '*L6.nc*')
     plot_it(data, 7)
+
+
+if __name__ == '__main__':
+    main()

@@ -53,5 +53,9 @@ def plot_time_series(netcdf_file, window, outfile=None):
         plt.savefig(outfile, dpi=300, bbox_inches='tight')
 
 
-if __name__ == '__main__':
+def main():
     plot_time_series('./data/CumberlandPlain_2018_L6.nc', window=7)
+
+
+if __name__ == '__main__':
+    main()
