@@ -61,3 +61,7 @@ def main():
     data_path = Path('./data')
     data = concat_data(data_path, '*L6.nc*')
     plot_minmaxmean(data, 7)
+
+
+if __name__ == '__main__':
+    main()
