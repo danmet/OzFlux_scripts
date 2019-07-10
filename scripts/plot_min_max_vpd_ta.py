@@ -6,7 +6,7 @@ from pathlib import Path
 from utils import nc_to_df, concat_data
 
 
-def plot_it(data, window, outfile=None):
+def plot_minmaxmean(data, window, outfile=None):
     """
     Function to plot time series of daily min, max and mean VPD and Ta.
 
@@ -60,4 +60,4 @@ def plot_it(data, window, outfile=None):
 if __name__ == '__main__':
     data_path = Path('./data')
     data = concat_data(data_path, '*L6.nc*')
-    plot_it(data, 7)
+    plot_minmaxmean(data, 7)
