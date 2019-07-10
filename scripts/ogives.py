@@ -53,9 +53,9 @@ def plot_ogives(df, outfile=None):
     plt.fill_between(df.index, df.quantile(q=.95, axis=1),
                      df.quantile(q=.05, axis=1), color='k', alpha=.1,
                      label='5th-95th percentile')
-    plt.axvline((1/(30*60)), c='k', ls=':', label='30 min')
-    plt.axvline(1/(60*60), c='k', ls='-.', label='60 min')
-    plt.axvline(1/(120*60), c='k', ls='--', label='120 min')
+    plt.axvline((1/(30*60)), c='.5', ls=':', label='30 min')
+    plt.axvline(1/(60*60), c='.5', ls='-.', label='60 min')
+    plt.axvline(1/(120*60), c='.5', ls='--', label='120 min')
 
     plt.legend()
     plt.xscale('log')
