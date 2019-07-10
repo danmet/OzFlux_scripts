@@ -57,7 +57,15 @@ def plot_minmaxmean(data, window, outfile=None):
         plt.savefig(outfile, dpi=300, bbox_inches='tight')
 
 
-if __name__ == '__main__':
+def main():
     data_path = Path('./data')
     data = concat_data(data_path, '*L6.nc*')
+<<<<<<< HEAD
     plot_minmaxmean(data, 7)
+=======
+    plot_it(data, 7)
+
+
+if __name__ == '__main__':
+    main()
+>>>>>>> e73c21d7db2f47722363d9ee37c5a3d893a47ce4
