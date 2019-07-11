@@ -36,7 +36,7 @@ def build_ogive_df(path_to_ogive_folder, ogive='og(w_ts)'):
 
 def plot_ogives(df, outfile=None):
     """
-    Function plot oviges contained in Dataframe
+    Function to plot oviges contained in Dataframe.
 
     Parameters
     ----------
@@ -47,7 +47,7 @@ def plot_ogives(df, outfile=None):
 
     Returns:
     --------
-    Pyplot figure and optional saves figure to file
+    Pyplot figure and optionally saves figure to file
     """
     plt.plot(df.median(axis=1), 'k-', label='median')
     plt.fill_between(df.index, df.quantile(q=.95, axis=1),

@@ -7,6 +7,19 @@ from statsmodels.nonparametric.smoothers_lowess import lowess
 
 
 def get_good_files(ep_output_folder):
+    """
+    Function extract all time when the CO2 flux Foken-flag was 0.
+
+    Parameters
+    ----------
+    ep_output_folder: string
+        path to folder containing EddyPro output files
+
+    Returns:
+    --------
+    good_files: np.array
+        Array with filenames when qc_co2_flux was 0.
+    """
     full_output_file = glob(f'{ep_output_folder}/**full_output*.csv*')[0]
     df = pd.read_csv(full_output_file, skiprows=[0, 2])
     df = df.query('qc_co2_flux == 0')
@@ -15,6 +28,23 @@ def get_good_files(ep_output_folder):
 
 
 def merge_good_files(good_files, ep_output_folder):
+    """
+    Function to build single dataframe merging all spectras and cospectras with
+    Foken flag 0 in EddyPro output folder.
+
+    Parameters
+    ----------
+    good_files: iterable
+        iterable containg raw 10Hz filenames when qc_co2_flux was 0
+    ep_output_folder: string
+        path to EddyPro output folder
+
+    Returns:
+    --------
+    good_spectras, good_cospectras: tuple
+        Dataframes with frequency as index and spectras or cosepctras of each
+        file as columns
+    """
     good_spectras = pd.DataFrame()
     good_cospectras = pd.DataFrame()
     for f in tqdm(good_files):
@@ -34,8 +64,22 @@ def merge_good_files(good_files, ep_output_folder):
 
 
 def plot_spectras(df, outfile=None):
+    """
+    Function to plot spectras.
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        dataframe containing spectras
+    outfile (optional): string
+        filepath for saving plot
+
+    Returns:
+    --------
+    Pyplot figure and optionally saves figure to file
+    """
     spectra_fig = plt.figure(1)
-    plt.plot(df.median(axis=1), 'k-', label='data with QC flag 0')
+    plt.plot(df.median(axis=1), 'k-', label='median spectra with QC flag 0')
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel('f (Hz)')
@@ -47,6 +91,20 @@ def plot_spectras(df, outfile=None):
 
 
 def plot_cospectras(df, outfile=None):
+    """
+    Function to plot cospectras.
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        dataframe containing cospectras
+    outfile (optional): string
+        filepath for saving plot
+
+    Returns:
+    --------
+    Pyplot figure and optionally saves figure to file
+    """
     cospectra_fig = plt.figure(2)
     plt.plot(df.median(axis=1), 'k.', alpha=.05, label='data with QC flag 0')
 
