@@ -20,8 +20,10 @@ def get_good_files(ep_output_folder):
     good_files: np.array
         Array with filenames when qc_co2_flux was 0.
     """
+    # read full_output file
     full_output_file = glob(f'{ep_output_folder}/**full_output*.csv*')[0]
     df = pd.read_csv(full_output_file, skiprows=[0, 2])
+    # filter for foken flag of 0 and return raw input filenames
     df = df.query('qc_co2_flux == 0')
     good_files = df['filename'].values
     return good_files
@@ -47,8 +49,10 @@ def merge_good_files(good_files, ep_output_folder):
     """
     good_spectras = pd.DataFrame()
     good_cospectras = pd.DataFrame()
+    # append data from files as columns with timestamp as name
     for f in tqdm(good_files):
         pattern = f'{f[5:13]}-{f[-8:-4]}'
+        # for some reason not all qc = 0 timestamps have a full_spectra file
         try:
             full_sectra_file = glob(
                 f'{ep_output_folder}/eddypro_full_cospectra/*{pattern}*.csv')[0]
@@ -78,14 +82,17 @@ def plot_spectras(df, outfile=None):
     --------
     Pyplot figure and optionally saves figure to file
     """
+    # plot data
     spectra_fig = plt.figure(1)
     plt.plot(df.median(axis=1), 'k-', label='median spectra with QC flag 0')
+    # tweak plot
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel('f (Hz)')
     plt.ylabel('spectra (T)')
     plt.legend()
     plt.tight_layout()
+    # save plot if desired
     if outfile:
         plt.savefig(outfile, dpi=300, bbox_inches='tight')
 
@@ -105,25 +112,25 @@ def plot_cospectras(df, outfile=None):
     --------
     Pyplot figure and optionally saves figure to file
     """
+    # plot data
     cospectra_fig = plt.figure(2)
     plt.plot(df.median(axis=1), 'k.', alpha=.05, label='data with QC flag 0')
-
+    # plot loess smoothed line
     smoothed = lowess(df.median(axis=1).values, df.index, is_sorted=True,
                       frac=0.025, it=0)
     plt.plot(smoothed[:, 0], smoothed[:, 1], 'b')
-
+    # plot ideal slope
     x = np.linspace(0.2, 5)
     y1 = .006*x**(-4/3)
-    y2 = .01*x**(-10/3)
     plt.plot(x, y1, 'r--', label='-4/3 slope')
-    plt.plot(x, y2, 'r:', label='-10/3 slope')
-
+    # tweak plot
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel('f (Hz)')
     plt.ylabel('cospectra (w/T)')
     plt.legend()
     plt.tight_layout()
+    # save plot if desired
     if outfile:
         plt.savefig(outfile, dpi=300, bbox_inches='tight')
 
