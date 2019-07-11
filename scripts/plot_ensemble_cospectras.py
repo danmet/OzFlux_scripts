@@ -37,7 +37,7 @@ def plot_ensemble_spectras(path_to_ensemble_file, cospectra, outfile=None):
     for i, col in enumerate(df_sel):
         ax[i].plot(x, y, 'k--', label='-4/3 slope')
         ax[i].loglog(df_sel[col], 'k.', label='')
-        ax[i].legend()
+        ax[i].legend(loc='lower left')
         ax[i].set_ylim(10**-5, 1)
         ax[i].set_xlabel('f (Hz)')
         ax[i].set_ylabel(f'cospectra ({cospectra})')
