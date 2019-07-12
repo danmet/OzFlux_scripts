@@ -23,7 +23,7 @@ def get_good_files(ep_output_folder):
     # read full_output file
     full_output_file = glob(f'{ep_output_folder}/**full_output*.csv*')[0]
     df = pd.read_csv(full_output_file, skiprows=[0, 2])
-    # filter for foken flag of 0 and return raw input filenames
+    # filter for Foken flag of 0 and return raw input filenames
     df = df.query('qc_co2_flux == 0')
     good_files = df['filename'].values
     return good_files
@@ -37,7 +37,7 @@ def merge_good_files(good_files, ep_output_folder):
     Parameters
     ----------
     good_files: iterable
-        iterable containg raw 10Hz filenames when qc_co2_flux was 0
+        iterable containing raw 10Hz filenames when qc_co2_flux was 0
     ep_output_folder: string
         path to EddyPro output folder
 

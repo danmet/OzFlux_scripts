@@ -13,7 +13,7 @@ def plot_minmaxmean(data, window, outfile=None):
     Parameters
     ----------
     data : pandas dataframe
-        dataframe containg VPD and Ta column
+        dataframe containing VPD and Ta column
     window: interger
         number of days used to calculate running mean
     outfile (optional):

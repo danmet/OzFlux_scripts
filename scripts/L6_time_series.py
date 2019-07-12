@@ -7,7 +7,7 @@ from utils import nc_to_df
 
 def plot_variable(data, var, ax, window):
     """
-    Helper function to plot indivdual variable on subplot.
+    Helper function to plot individual variable on subplot.
     """
     ax.plot(data[f'{var}_SOLO'].resample('d').mean().rolling(
         window, center=True).mean(), 'k-', label=f'{var} SOLO')

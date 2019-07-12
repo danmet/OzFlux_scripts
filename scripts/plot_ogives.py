@@ -57,7 +57,7 @@ def plot_ogives(df, outfile=None):
     plt.axvline((1/(30*60)), c='.5', ls=':', label='30 min')
     plt.axvline(1/(60*60), c='.5', ls='-.', label='60 min')
     plt.axvline(1/(120*60), c='.5', ls='--', label='120 min')
-    # tewak plot
+    # tweak plot
     plt.legend()
     plt.xscale('log')
     plt.xlabel('f (Hz)')

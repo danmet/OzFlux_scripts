@@ -33,7 +33,7 @@ def plot_ensemble_spectras(path_to_ensemble_file, cospectra, outfile=None):
     # create array with subplots
     fig, axs = plt.subplots(ncols=2, nrows=4, figsize=(8, 8))
     ax = axs.ravel()
-    # plot each time bin on seperate suplot
+    # plot each time bin on separate suplot
     for i, col in enumerate(df_sel):
         ax[i].plot(x, y, 'k--', label='-4/3 slope')
         ax[i].loglog(df_sel[col], 'k.', label='')
