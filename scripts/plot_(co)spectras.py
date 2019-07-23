@@ -84,7 +84,13 @@ def plot_spectras(df, outfile=None):
     """
     # plot data
     spectra_fig = plt.figure(1)
-    plt.plot(df.median(axis=1), 'k-', label='median spectra with QC flag 0')
+    # plt.plot(df.median(axis=1), 'k-', label='median spectra with QC flag 0')
+    plt.plot(df.median(axis=1), 'k.', alpha=.05,
+             label='median data with QC flag 0')
+    # plot loess smoothed line
+    smoothed = lowess(df.median(axis=1).values, df.index, is_sorted=True,
+                      frac=0.01, it=0)
+    plt.plot(smoothed[40:, 0], smoothed[40:, 1], 'b', label='lowess fit')
     # tweak plot
     plt.xscale('log')
     plt.yscale('log')
@@ -114,11 +120,12 @@ def plot_cospectras(df, outfile=None):
     """
     # plot data
     cospectra_fig = plt.figure(2)
-    plt.plot(df.median(axis=1), 'k.', alpha=.05, label='data with QC flag 0')
+    plt.plot(df.median(axis=1), 'k.', alpha=.05,
+             label='median data with QC flag 0')
     # plot loess smoothed line
     smoothed = lowess(df.median(axis=1).values, df.index, is_sorted=True,
-                      frac=0.025, it=0)
-    plt.plot(smoothed[:, 0], smoothed[:, 1], 'b')
+                      frac=0.05, it=0)
+    plt.plot(smoothed[:, 0], smoothed[:, 1], 'b', label='lowess fit')
     # plot ideal slope
     x = np.linspace(0.2, 5)
     y1 = .006*x**(-4/3)
